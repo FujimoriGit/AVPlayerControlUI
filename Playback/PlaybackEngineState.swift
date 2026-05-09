@@ -1,13 +1,6 @@
-//
-//  PlayerState.swift
-//  Playback
-//
-//  Created by Daiki Fujimori on 2026/05/09
-//
-
 import CoreMedia
 
-public struct PlayerState: Equatable, Sendable {
+public struct PlaybackEngineState: Equatable, Sendable {
 
     public var status: PlaybackStatus
     public var currentTime: CMTime
@@ -16,8 +9,6 @@ public struct PlayerState: Equatable, Sendable {
     public var bufferedSeconds: Double
     public var subtitleTracks: [SubtitleTrack]
     public var selectedSubtitleTrackID: SubtitleTrack.ID?
-    public var isFullscreen: Bool
-    public var areControlsVisible: Bool
 
     public init(
         status: PlaybackStatus = .idle,
@@ -26,9 +17,7 @@ public struct PlayerState: Equatable, Sendable {
         rate: Float = 0,
         bufferedSeconds: Double = 0,
         subtitleTracks: [SubtitleTrack] = [],
-        selectedSubtitleTrackID: SubtitleTrack.ID? = nil,
-        isFullscreen: Bool = false,
-        areControlsVisible: Bool = true
+        selectedSubtitleTrackID: SubtitleTrack.ID? = nil
     ) {
         self.status = status
         self.currentTime = currentTime
@@ -37,7 +26,5 @@ public struct PlayerState: Equatable, Sendable {
         self.bufferedSeconds = bufferedSeconds
         self.subtitleTracks = subtitleTracks
         self.selectedSubtitleTrackID = selectedSubtitleTrackID
-        self.isFullscreen = isFullscreen
-        self.areControlsVisible = areControlsVisible
     }
 }

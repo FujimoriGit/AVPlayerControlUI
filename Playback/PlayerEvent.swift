@@ -1,10 +1,3 @@
-//
-//  PlayerEvent.swift
-//  Playback
-//
-//  Created by Daiki Fujimori on 2026/05/09
-//
-
 public enum PlayerEvent: Sendable {
 
     case closeRequested

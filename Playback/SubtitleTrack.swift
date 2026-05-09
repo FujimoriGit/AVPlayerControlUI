@@ -1,10 +1,3 @@
-//
-//  SubtitleTrack.swift
-//  Playback
-//
-//  Created by Daiki Fujimori on 2026/05/09
-//
-
 import Foundation
 
 public struct SubtitleTrack: Identifiable, Equatable, Sendable {

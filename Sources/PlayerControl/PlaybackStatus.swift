@@ -1,6 +1,6 @@
 //
 //  PlaybackStatus.swift
-//  Playback
+//  PlayerControl
 //
 //  Created by Daiki Fujimori on 2026/05/09
 //

@@ -36,6 +36,11 @@
 			path = AVPlayerControlUITests;
 			sourceTree = "<group>";
 		};
+		D995FCFF2FAF01B0004C14ED /* PlayerControl */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Sources/PlayerControl;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +65,7 @@
 		D995FCC52FAEDBDF004C14ED = {
 			isa = PBXGroup;
 			children = (
+				D995FCFF2FAF01B0004C14ED /* PlayerControl */,
 				D995FCD12FAEDBDF004C14ED /* AVPlayerControlUI */,
 				D995FCDE2FAEDBDF004C14ED /* AVPlayerControlUITests */,
 				D995FCD02FAEDBDF004C14ED /* Products */,
@@ -103,6 +109,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				D995FCD12FAEDBDF004C14ED /* AVPlayerControlUI */,
+				D995FCFF2FAF01B0004C14ED /* PlayerControl */,
 			);
 			name = AVPlayerControlUI;
 			packageProductDependencies = (

@@ -7,11 +7,11 @@ let package = Package(
         .iOS(.v15)
     ],
     products: [
-        .library(name: "Playback", targets: ["Playback"]),
+        .library(name: "PlayerControl", targets: ["PlayerControl"]),
     ],
     targets: [
         .target(
-            name: "Playback",
+            name: "PlayerControl",
             swiftSettings: [
                 .swiftLanguageMode(.v6)
             ]

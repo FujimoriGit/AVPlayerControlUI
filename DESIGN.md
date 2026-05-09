@@ -48,7 +48,7 @@ graph LR
     subgraph PlayerControlUIKit
         V["<b>PlayerControlView</b><br/>UIView<br/>描画 / 操作受付"]
     end
-    subgraph Playback
+    subgraph PlayerControl
         S["<b>PlaybackStore</b><br/>状態 + action 処理<br/>UI 非依存"]
         A["<b>PlaybackAdapter</b> (protocol)<br/>AVPlayerAdapter (実装)<br/>AVPlayer の詳細を吸収"]
     end
@@ -81,7 +81,7 @@ SPM package を 2 product に分ける。
 
 ```mermaid
 graph LR
-    A["<b>Playback</b><br/>Store / Adapter / 状態 / action"]
+    A["<b>PlayerControl</b><br/>Store / Adapter / 状態 / action"]
     B["<b>PlayerControlUIKit</b><br/>UIView 実装"]
     C["<b>PlayerControlSwiftUI</b><br/>SwiftUI View 実装<br/><i>※将来追加</i>"]
 
@@ -91,10 +91,10 @@ graph LR
 
 | モジュール | 入るもの | 入らないもの |
 |---|---|---|
-| `Playback` | `PlaybackStore` / `PlaybackAdapter` / `AVPlayerAdapter` / 状態 struct / action enum / event enum | UIView / UIViewController / SwiftUI View |
+| `PlayerControl` | `PlaybackStore` / `PlaybackAdapter` / `AVPlayerAdapter` / 状態 struct / action enum / event enum | UIView / UIViewController / SwiftUI View |
 | `PlayerControlUIKit` | `PlayerControlView` 本体・サブパーツ View・レイアウト・ジェスチャ | — |
 
-**なぜ分けるか**: 後で `PlayerControlSwiftUI` を足す時に `Playback` をそのまま再利用できる。状態管理・AVPlayer 連動を SwiftUI 版で再実装しなくて済む。
+**なぜ分けるか**: 後で `PlayerControlSwiftUI` を足す時に `PlayerControl` をそのまま再利用できる。状態管理・AVPlayer 連動を SwiftUI 版で再実装しなくて済む。
 
 ---
 
@@ -216,7 +216,7 @@ classDiagram
 
 ---
 
-## 型一覧 (Playback モジュール)
+## 型一覧 (PlayerControl モジュール)
 
 ### `PlaybackAdapter` (protocol)
 
@@ -503,7 +503,7 @@ graph TD
 
 ## 配布
 
-- **SPM (主)**: `Package.swift` に 2 product (`Playback`, `PlayerControlUIKit`) を宣言
+- **SPM (主)**: `Package.swift` に 2 product (`PlayerControl`, `PlayerControlUIKit`) を宣言
 - **xcframework (副)**: `scripts/build-xcframework.sh` で `xcodebuild archive` を `iphoneos` / `iphonesimulator` 別に実行 → `xcodebuild -create-xcframework` で結合。CI (GitHub Actions) で自動化予定
 
 ---
@@ -512,13 +512,13 @@ graph TD
 
 ```
 Sources/
-├── Playback/              ← そのまま再利用 (Store / Adapter / state)
+├── PlayerControl/         ← そのまま再利用 (Store / Adapter / state)
 ├── PlayerControlUIKit/    ← そのまま
-└── PlayerControlSwiftUI/  ← 新規。Playback に依存、UIKit 非依存
+└── PlayerControlSwiftUI/  ← 新規。PlayerControl に依存、UIKit 非依存
 ```
 
 ```swift
-import Playback
+import PlayerControl
 import SwiftUI
 
 public struct PlayerControlView: View {

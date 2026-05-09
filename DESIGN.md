@@ -64,6 +64,111 @@ graph LR
 
 ---
 
+## クラス図
+
+```mermaid
+classDiagram
+    direction TB
+
+    class PlaybackController {
+        <<class>>
+        +AVPlayer player
+        +PlayerState state
+        +AnyPublisher~PlayerEvent, Never~ events
+        +init(player: AVPlayer)
+        +play()
+        +pause()
+        +seek(to: CMTime)
+        +selectSubtitle(SubtitleTrack?)
+        +setControlsVisible(Bool)
+        +requestFullscreen(Bool)
+        +requestClose()
+    }
+
+    class PlayerState {
+        <<struct>>
+        +PlaybackStatus status
+        +CMTime currentTime
+        +CMTime duration
+        +Double bufferedSeconds
+        +Float rate
+        +Bool isFullscreen
+        +Bool areControlsVisible
+        +[SubtitleTrack] subtitleTracks
+        +SubtitleTrack.ID? selectedSubtitleTrackID
+    }
+
+    class PlaybackStatus {
+        <<enum>>
+        idle
+        loading
+        playing
+        paused
+        ended
+        failed(Error)
+    }
+
+    class PlayerEvent {
+        <<enum>>
+        closeRequested
+        fullscreenRequested(Bool)
+        settingsRequested
+    }
+
+    class PlayerAppearance {
+        <<struct>>
+        +UIColor tintColor
+        +UIColor controlBackgroundColor
+        +PlayerIcons icons
+        +PlayerFonts fonts
+        +TimeInterval autoHideDelay
+        +youtubeLike : Self$
+    }
+
+    class PlayerControlConfiguration {
+        <<struct>>
+        +Bool showsCloseButton
+        +Bool showsSettingsButton
+        +Bool showsFullscreenButton
+        +Bool showsSubtitleButton
+        +TimeInterval seekIncrementSeconds
+    }
+
+    class PlayerControlView {
+        <<class>>
+        +PlayerControlViewDelegate? delegate
+        +init(controller, appearance, configuration)
+    }
+
+    class PlayerControlViewDelegate {
+        <<protocol>>
+        +playerControlViewDidRequestClose(view)
+        +playerControlView(view, didRequestFullscreen)
+        +playerControlViewDidRequestSettings(view)
+    }
+
+    class UIView {
+        <<UIKit>>
+    }
+
+    UIView <|-- PlayerControlView : inherits
+    PlaybackController *-- PlayerState : holds
+    PlaybackController ..> PlayerEvent : publishes
+    PlayerState *-- PlaybackStatus : has
+    PlayerControlView --> PlaybackController : observes / drives
+    PlayerControlView ..> PlayerAppearance : uses
+    PlayerControlView ..> PlayerControlConfiguration : uses
+    PlayerControlView --> PlayerControlViewDelegate : delegates to
+```
+
+凡例:
+- `*--` 強い所有 (composition)
+- `-->` 参照
+- `..>` 依存 (use / publish)
+- `<|--` 継承
+
+---
+
 ## 型一覧 (Playback モジュール)
 
 ### `PlaybackController` (class)
